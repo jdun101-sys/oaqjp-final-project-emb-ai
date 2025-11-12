@@ -1,4 +1,5 @@
 import requests
+import json
 
 def emotion_detector(text_to_analyze):
     # URL of the emotion dectector service
@@ -13,5 +14,18 @@ def emotion_detector(text_to_analyze):
     # Sending a POST request to the emotion dectector API
     response = requests.post(url, json=myobj, headers=header)
 
-    # Returning text containing emotion dectector results
-    return response.text
+    # Parsing the JSON response from the API
+    formatted_response = json.loads(response.text)
+
+    # Extracting emotions which contains anger, disgust, fear,
+    # joy and sadness from the response
+    emotions = formatted_response['emotionPredictions'][0]['emotion']
+
+    # Finding the dominant emotion with the highest score
+    dominant_emotion = max(emotions, key=emotions.get)
+
+    # Adding dominant emotion to emotions object
+    emotions["dominant_emotion"] = dominant_emotion
+    
+    # Returning json containing emotion dectector results
+    return emotions
