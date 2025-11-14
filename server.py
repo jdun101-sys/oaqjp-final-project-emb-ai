@@ -8,6 +8,7 @@ def index():
     '''
     This endpoint returns index.html file
     '''
+    # Return index.html
     return render_template("index.html")
 
 @app.route("/emotionDetector")
@@ -22,12 +23,18 @@ def emotion_detection():
     # Pass the text to the emotion_detector function and store the response
     response = emotion_detector(text_to_analyze)
 
+    # Check if the dominant emotion in the response is None
+    if response["dominant_emotion"] is None:
+        # Return text to instruct the user to try again with valid input
+        return "Invalid text! Please try again!"
+
     # Format the reponse to be displayed
     response_text = f"For the given statement, the system response is 'anger': \
     {response['anger']}, 'disgust': {response['disgust']}, 'fear': {response['fear']}, \
     'joy': {response['joy']}, and 'sadness': {response['sadness']}. The dominant emotion is \
     {response['dominant_emotion']}."
 
+    # Return emotion detector text
     return response_text
 
 if __name__ == "__main__":
