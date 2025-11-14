@@ -2,6 +2,9 @@ import requests
 import json
 
 def emotion_detector(text_to_analyze):
+    '''
+    This function is used return an emotion classified response based on the input text
+    '''
     # URL of the emotion dectector service
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
 
